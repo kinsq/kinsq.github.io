@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Growing and Shrinking Circle</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: blue;
+            overflow: hidden; /* Disable scrollbars */
+        }
+        #controls {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: white;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Ensure controls are above the circle */
+        }
+        #circle {
+            width: 1px;
+            height: 1px;
+            background-color: red;
+            border-radius: 50%;
+            transition: width 1s, height 1s;
+        }
+    </style>
+</head>
+<body>
+    <div id="controls">
+        <label for="speed">Speed (ms): </label>
+        <input type="number" id="speed" value="125">
+        <button onclick="updateSpeed()">Update Speed</button>
+    </div>
+    <div id="circle"></div>
+    <script>
+        const circle = document.getElementById('circle');
+        let growing = true;
+        let intervalId;
+        let speed = document.getElementById('speed').value;
+
+        function updateSpeed() {
+            clearInterval(intervalId);
+            speed = document.getElementById('speed').value;
+            startAnimation();
+        }
+
+        function startAnimation() {
+            intervalId = setInterval(() => {
+                if (growing) {
+                    circle.style.width = '10000px';
+                    circle.style.height = '10000px';
+                } else {
+                    circle.style.width = '1px';
+                    circle.style.height = '1px';
+                }
+                growing = !growing;
+            }, speed);
+        }
+
+        startAnimation();
+    </script>
+</body>
+</html>
